@@ -6,6 +6,27 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:responsive_layout_rnd/helper/internet_checker_helper/internet_checker_helper_logic.dart';
 import 'package:responsive_layout_rnd/modules/spalsh/splash_logic.dart';
 
+// Container(
+//   color: Colors.red,
+//   height: 20,
+//   child: Marquee(
+//     text: 'Some sample text that takes some space Some sample text that takes some space Some sample text that takes some space.',
+//     style: TextStyle(fontWeight: FontWeight.bold),
+//     scrollAxis: Axis.horizontal,
+//     crossAxisAlignment: CrossAxisAlignment.start,
+//     blankSpace: 50.0,
+//     // velocity: 100.0,
+//     // startPadding: 100.0,
+//     // accelerationDuration: Duration(seconds: 1),
+//     // accelerationCurve: Curves.linear,
+//     // decelerationDuration: Duration(milliseconds: 500),
+//     // decelerationCurve: Curves.easeOut,
+//   ),
+// ),
+// const SizedBox(height: SizeConstant.CONTENTSPACING*3,),  marque example
+
+
+
 class SplashMobilePortrait extends GetView<SplashLogic> {
   final SizingInformation? sizingInformation;
   const SplashMobilePortrait({Key? key,this.sizingInformation}) : super(key: key);
