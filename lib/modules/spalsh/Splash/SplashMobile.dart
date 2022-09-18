@@ -35,6 +35,15 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
   Widget build(BuildContext context) {
     Get.find<SplashLogic>();
     Get.find<InternetCheckerHelperLogic>();
+
+    var designModel = DesignModel.fromMap(controller.demoJson);
+
+    //print(designModel);
+
+    for(int i = 0; i<designModel.design!.length;i++){
+      print(designModel.design![i].column);
+    }
+
     return SafeArea(
       child: Scaffold(
         body: DataTable2(
@@ -66,8 +75,42 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
               }
               return Colors.white;
             }),
-            columns: [
-              DataColumn2(
+            columns: designModel.design!.map((e) => DataColumn2(
+              label: e.isMultiple == false ? Center(child: Text(e.label.toString())) : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                SizedBox(height: 3,),
+              Text(e.label.toString()),
+              Divider(color: Colors.black87,thickness: 1,height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: e.column!.isNotEmpty ? e.column!.map((value) => Row(
+                      children: [
+                          Text(value),
+                          VerticalDivider(color: Colors.black87,thickness: 1),
+                      ],
+                    )).toList() : e.column!.map((value) => Column(
+                      children: [],
+                    )).toList(),
+                    //   Text('Column B'),
+                    //   VerticalDivider(color: Colors.black87,thickness: 1),
+                    //   Text('Column B'),
+                    //   VerticalDivider(color: Colors.black87,thickness: 1),
+                    //   Text('Column B'),
+                  ),
+                ),
+              ),]),
+              fixedWidth: 200,
+            )).toList(),
+
+
+
+
+
+             /* DataColumn2(
                 label: Center(child: Text('Column A')),
                 fixedWidth: 200,
               ),
@@ -104,8 +147,7 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
               DataColumn2(
                 label: Center(child: Text('Column D')),
                 fixedWidth: 200,
-              ),
-            ],
+              ),*/
             rows: List<DataRow>.generate(
                 100,
                     (index) => DataRow(cells: [
