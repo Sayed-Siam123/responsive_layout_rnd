@@ -86,13 +86,12 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: IntrinsicHeight(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         for(int i = 0; i < e.column!.length; i++) ...[
                           Text(e.column![i]),
-                          e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : SizedBox(),
+                          //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
                         ],
-                        // VerticalDivider(color: Colors.black87,thickness: 1, width: 0),
                       ],
 
                       //   Text('Column B'),
