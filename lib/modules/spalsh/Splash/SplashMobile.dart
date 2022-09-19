@@ -71,7 +71,7 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
               return Colors.white;
             }),
             columns: designModel.design!.map((e) => DataColumn2(
-              fixedWidth: e.isMultiple == false ? 200 : 350,
+              fixedWidth: e.isMultiple == false ? 100 : (100.0 * e.column!.length), //if single then 100 if multiple then single size * column length
               label: e.isMultiple == false ? Center(child: Text(e.label.toString())) : Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -125,14 +125,18 @@ class SplashMobileLandscape extends GetView<SplashLogic> {
   Widget build(BuildContext context) {
     Get.find<SplashLogic>();
     Get.find<InternetCheckerHelperLogic>();
+
+    var designModel = DesignModel.fromMap(controller.demoJson,"design");
+    var dataModel = DataModel.fromMap(controller.demoJson,"data");
+
     return SafeArea(
       child: Scaffold(
         body: DataTable2(
             columnSpacing: 2,
-            horizontalMargin: 12,
+            horizontalMargin: 2,
             minWidth: 1500,
             dividerThickness: 0,
-            border: TableBorder(
+            border: const TableBorder(
               top: BorderSide(color: Colors.black),
               bottom: BorderSide(color: Colors.black),
               left: BorderSide(color: Colors.black),
@@ -156,66 +160,48 @@ class SplashMobileLandscape extends GetView<SplashLogic> {
               }
               return Colors.white;
             }),
-            columns: [
-              DataColumn2(
-                label: Center(child: Text('Column A')),
-                fixedWidth: 200,
-              ),
-              DataColumn2(
-                fixedWidth: 300,
-                label: Column(
+            columns: designModel.design!.map((e) => DataColumn2(
+              fixedWidth: e.isMultiple == false ? 200 : 350,
+              label: e.isMultiple == false ? Center(child: Text(e.label.toString())) : Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 3,),
-                    Text('Column B'),
-                    Divider(color: Colors.black87,thickness: 1,height: 10),
+                    const SizedBox(height: 8,),
+                    Text(e.label.toString()),
+                    const Divider(color: Colors.black87,thickness: 1,height: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: IntrinsicHeight(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text('Column B'),
-                            VerticalDivider(color: Colors.black87,thickness: 1),
-                            Text('Column B'),
-                            VerticalDivider(color: Colors.black87,thickness: 1),
-                            Text('Column B'),
+                            for(int i = 0; i < e.column!.length; i++) ...[
+                              Center(child: Text(e.column![i])),
+                              //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
+                            ],
                           ],
                         ),
                       ),
-                    )
-                  ],
-                ),
-              ),
-              DataColumn2(
-                label: Center(child: Text('Column C')),
-                fixedWidth: 200,
-              ),
-              DataColumn2(
-                label: Center(child: Text('Column D')),
-                fixedWidth: 200,
-              ),
-            ],
+                    ),]),
+            )).toList(),
+
             rows: List<DataRow>.generate(
-                100,
-                    (index) => DataRow(cells: [
-                  DataCell(Center(child: Text('A' * (10 - index % 10)))),
-                  DataCell(Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
-                        VerticalDivider(color: Colors.black87,thickness: 1),
-                        SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
-                        VerticalDivider(color: Colors.black87,thickness: 1),
-                        SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                dataModel.data!.length, (index) => DataRow(
+              cells: dataModel.data![index].map((e) {
+                return !e.isMultiple! ? DataCell(Center(child: Text(e.label.toString())))
+                    : DataCell(Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      for(int i = 0; i < e.column!.length; i++) ...[
+                        SizedBox(width: 50,child: Center(child: Text(e.column![i])),),
+                        //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
                       ],
-                    ),
-                  )),
-                  DataCell(Center(child: Text('C' * (10 - index % 10)))),
-                  DataCell(Center(child: Text('D' * (10 - index % 10)))),
-                ]))),
+                    ],
+                  ),
+                ));
+              }).toList(),
+            ))),
       ),
     );
   }

@@ -186,10 +186,10 @@ class DataModel {
     this.data,
   });
 
-  final List<List<Datum>>? data;
+  final List<List<Data>>? data;
 
   factory DataModel.fromMap(Map<String, dynamic> json,key) => DataModel(
-    data: json[key] == null ? null : List<List<Datum>>.from(json[key].map((x) => List<Datum>.from(x.map((x) => Datum.fromMap(x))))),
+    data: json[key] == null ? null : List<List<Data>>.from(json[key].map((x) => List<Data>.from(x.map((x) => Data.fromMap(x))))),
   );
 
   Map<String, dynamic> toMap() => {
@@ -197,8 +197,8 @@ class DataModel {
   };
 }
 
-class Datum {
-  Datum({
+class Data {
+  Data({
     this.label,
     this.isMultiple,
     this.column,
@@ -208,7 +208,7 @@ class Datum {
   final bool? isMultiple;
   final List<String>? column;
 
-  factory Datum.fromMap(Map<String, dynamic> json) => Datum(
+  factory Data.fromMap(Map<String, dynamic> json) => Data(
     label: json["label"] == null ? null : json["label"],
     isMultiple: json["isMultiple"] == null ? null : json["isMultiple"],
     column: json["column"] == null ? null : List<String>.from(json["column"].map((x) => x)),
