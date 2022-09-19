@@ -36,13 +36,8 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
     Get.find<SplashLogic>();
     Get.find<InternetCheckerHelperLogic>();
 
-    var designModel = DesignModel.fromMap(controller.demoJson);
-
-    //print(designModel);
-
-    // for(int i = 0; i<designModel.design!.length;i++){
-    //   print(designModel.design![i].column);
-    // }
+    var designModel = DesignModel.fromMap(controller.demoJson,"design");
+    var dataModel = DataModel.fromMap(controller.demoJson,"data");
 
     return SafeArea(
       child: Scaffold(
@@ -51,7 +46,7 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
             horizontalMargin: 2,
             minWidth: 1500,
             dividerThickness: 0,
-            border: TableBorder(
+            border: const TableBorder(
               top: BorderSide(color: Colors.black),
               bottom: BorderSide(color: Colors.black),
               left: BorderSide(color: Colors.black),
@@ -76,12 +71,13 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
               return Colors.white;
             }),
             columns: designModel.design!.map((e) => DataColumn2(
+              fixedWidth: e.isMultiple == false ? 200 : 350,
               label: e.isMultiple == false ? Center(child: Text(e.label.toString())) : Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                SizedBox(height: 3,),
+                const SizedBox(height: 8,),
                 Text(e.label.toString()),
-                Divider(color: Colors.black87,thickness: 1,height: 10),
+                const Divider(color: Colors.black87,thickness: 1,height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: IntrinsicHeight(
@@ -89,96 +85,33 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         for(int i = 0; i < e.column!.length; i++) ...[
-                          Text(e.column![i]),
+                          Center(child: Text(e.column![i])),
                           //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
                         ],
                       ],
-
-                      //   Text('Column B'),
-                      //   VerticalDivider(color: Colors.black87,thickness: 1),
-                      //   Text('Column B'),
-                      //   VerticalDivider(color: Colors.black87,thickness: 1),
-                      //   Text('Column B'),
                     ),
                   ),
                 ),]),
-                fixedWidth: e.isMultiple == false ? 200 : 350,
               )).toList(),
 
-
-
-
-
-             /* DataColumn2(
-                label: Center(child: Text('Column A')),
-                fixedWidth: 200,
-              ),
-              DataColumn2(
-                fixedWidth: 300,
-                label: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 3,),
-                    Text('Column B'),
-                    Divider(color: Colors.black87,thickness: 1,height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: IntrinsicHeight(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text('Column B'),
-                            VerticalDivider(color: Colors.black87,thickness: 1),
-                            Text('Column B'),
-                            VerticalDivider(color: Colors.black87,thickness: 1),
-                            Text('Column B'),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              DataColumn2(
-                label: Center(child: Text('Column C')),
-                fixedWidth: 200,
-              ),
-              DataColumn2(
-                label: Center(child: Text('Column D')),
-                fixedWidth: 200,
-              ),*/
             rows: List<DataRow>.generate(
-                100,
-                    (index) => DataRow(cells: [
-                  DataCell(Center(child: Text('A' * (10 - index % 10)))),
-                  DataCell(Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
-                        VerticalDivider(color: Colors.black87,thickness: 1),
-                        SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
-                        VerticalDivider(color: Colors.black87,thickness: 1),
-                        SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
-                      ],
-                    ),
-                  )),
-                  DataCell(Center(child: Text('C' * (10 - index % 10)))),
-
-                      DataCell(Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
-                            VerticalDivider(color: Colors.black87,thickness: 1),
-                            SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                dataModel.data!.length, (index) => DataRow(
+                cells: dataModel.data![index].map((e) {
+                  return !e.isMultiple! ? DataCell(Center(child: Text(e.label.toString())))
+                      : DataCell(Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          for(int i = 0; i < e.column!.length; i++) ...[
+                            SizedBox(width: 50,child: Center(child: Text(e.column![i])),),
+                            //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
                           ],
-                        ),
-                      )),
-                  DataCell(Center(child: Text('D' * (10 - index % 10)))),
-                ]))),
+                        ],
+                    ),
+                  ));
+                }).toList(),
+            ))),
       ),
     );
   }
@@ -287,5 +220,57 @@ class SplashMobileLandscape extends GetView<SplashLogic> {
     );
   }
 }
+
+
+/*[
+                  dataModel.design![index].isMultiple! == false ? DataCell(Center(child: Text(dataModel.design![index].label.toString()))) : DataCell(Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        for(int i = 0; i < dataModel.design![index].column!.length; i++) ...[
+                          SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                          //Text(dataModel.design![index].column![i].toString()),
+                          //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
+                        ],
+                      ],
+                      // children: [
+                      //   SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                      //   VerticalDivider(color: Colors.black87,thickness: 1),
+                      //   SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                      //   VerticalDivider(color: Colors.black87,thickness: 1),
+                      //   SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                      // ],
+                    ),
+                  )),
+
+              DataCell(Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                        VerticalDivider(color: Colors.black87,thickness: 1),
+                        SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                        VerticalDivider(color: Colors.black87,thickness: 1),
+                        SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                      ],
+                    ),
+                  )),
+                  DataCell(Center(child: Text('C' * (10 - index % 10)))),
+
+                      DataCell(Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                            VerticalDivider(color: Colors.black87,thickness: 1),
+                            SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                          ],
+                        ),
+                      )),
+                  DataCell(Center(child: Text('D' * (10 - index % 10)))),
+                ]*/
 
 

@@ -42,6 +42,77 @@ class SplashLogic extends GetxController {
         "isMultiple" : false,
         "column": []
       }
+    ],
+
+    "data": [
+      [
+        {
+          "label": "1000",
+          "isMultiple": false,
+          "column": []
+        },
+        {
+          "label": "",
+          "isMultiple": true,
+          "column": [
+            "1331",
+            "121343",
+            "45445"
+          ]
+        },
+        {
+          "label": "453534",
+          "isMultiple": false,
+          "column": []
+        },
+        {
+          "label": "",
+          "isMultiple": true,
+          "column": [
+            "324234",
+            "2342.65"
+          ]
+        },
+        {
+          "label": "32423",
+          "isMultiple": false,
+          "column": []
+        }
+      ],
+      [
+        {
+          "label": "2000",
+          "isMultiple": false,
+          "column": []
+        },
+        {
+          "label": "",
+          "isMultiple": true,
+          "column": [
+            "1331",
+            "121343",
+            "45445"
+          ]
+        },
+        {
+          "label": "253534",
+          "isMultiple": false,
+          "column": []
+        },
+        {
+          "label": "",
+          "isMultiple": true,
+          "column": [
+            "324234",
+            "2342.65"
+          ]
+        },
+        {
+          "label": "32423",
+          "isMultiple": false,
+          "column": []
+        }
+      ]
     ]
   };
 
@@ -77,8 +148,8 @@ class DesignModel {
 
   final List<Design>? design;
 
-  factory DesignModel.fromMap(Map<String, dynamic> json) => DesignModel(
-    design: json["design"] == null ? null : List<Design>.from(json["design"].map((x) => Design.fromMap(x))),
+  factory DesignModel.fromMap(Map<String, dynamic> json,key) => DesignModel(
+    design: json[key] == null ? null : List<Design>.from(json[key].map((x) => Design.fromMap(x))),
   );
 
   Map<String, dynamic> toMap() => {
@@ -109,3 +180,44 @@ class Design {
     "column": column == null ? null : List<dynamic>.from(column!.map((x) => x)),
   };
 }
+
+class DataModel {
+  DataModel({
+    this.data,
+  });
+
+  final List<List<Datum>>? data;
+
+  factory DataModel.fromMap(Map<String, dynamic> json,key) => DataModel(
+    data: json[key] == null ? null : List<List<Datum>>.from(json[key].map((x) => List<Datum>.from(x.map((x) => Datum.fromMap(x))))),
+  );
+
+  Map<String, dynamic> toMap() => {
+    "data": data == null ? null : List<dynamic>.from(data!.map((x) => List<dynamic>.from(x.map((x) => x.toMap())))),
+  };
+}
+
+class Datum {
+  Datum({
+    this.label,
+    this.isMultiple,
+    this.column,
+  });
+
+  final String? label;
+  final bool? isMultiple;
+  final List<String>? column;
+
+  factory Datum.fromMap(Map<String, dynamic> json) => Datum(
+    label: json["label"] == null ? null : json["label"],
+    isMultiple: json["isMultiple"] == null ? null : json["isMultiple"],
+    column: json["column"] == null ? null : List<String>.from(json["column"].map((x) => x)),
+  );
+
+  Map<String, dynamic> toMap() => {
+    "label": label == null ? null : label,
+    "isMultiple": isMultiple == null ? null : isMultiple,
+    "column": column == null ? null : List<dynamic>.from(column!.map((x) => x)),
+  };
+}
+
