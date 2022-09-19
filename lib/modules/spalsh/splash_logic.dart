@@ -29,6 +29,15 @@ class SplashLogic extends GetxController {
       },
 
       {
+        "label": "column E",
+        "isMultiple" : true,
+        "column": [
+          "column E1",
+          "column E2",
+        ]
+      },
+
+      {
         "label": "column D",
         "isMultiple" : false,
         "column": []

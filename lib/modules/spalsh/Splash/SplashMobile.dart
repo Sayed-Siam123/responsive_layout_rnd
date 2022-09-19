@@ -40,9 +40,9 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
 
     //print(designModel);
 
-    for(int i = 0; i<designModel.design!.length;i++){
-      print(designModel.design![i].column);
-    }
+    // for(int i = 0; i<designModel.design!.length;i++){
+    //   print(designModel.design![i].column);
+    // }
 
     return SafeArea(
       child: Scaffold(
@@ -80,31 +80,31 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                 SizedBox(height: 3,),
-              Text(e.label.toString()),
-              Divider(color: Colors.black87,thickness: 1,height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: IntrinsicHeight(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: e.column!.isNotEmpty ? e.column!.map((value) => Row(
+                Text(e.label.toString()),
+                Divider(color: Colors.black87,thickness: 1,height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                          Text(value),
-                          VerticalDivider(color: Colors.black87,thickness: 1),
+                        for(int i = 0; i < e.column!.length; i++) ...[
+                          Text(e.column![i]),
+                          e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : SizedBox(),
+                        ],
+                        // VerticalDivider(color: Colors.black87,thickness: 1, width: 0),
                       ],
-                    )).toList() : e.column!.map((value) => Column(
-                      children: [],
-                    )).toList(),
-                    //   Text('Column B'),
-                    //   VerticalDivider(color: Colors.black87,thickness: 1),
-                    //   Text('Column B'),
-                    //   VerticalDivider(color: Colors.black87,thickness: 1),
-                    //   Text('Column B'),
+
+                      //   Text('Column B'),
+                      //   VerticalDivider(color: Colors.black87,thickness: 1),
+                      //   Text('Column B'),
+                      //   VerticalDivider(color: Colors.black87,thickness: 1),
+                      //   Text('Column B'),
+                    ),
                   ),
-                ),
-              ),]),
-              fixedWidth: 200,
-            )).toList(),
+                ),]),
+                fixedWidth: e.isMultiple == false ? 200 : 350,
+              )).toList(),
 
 
 
@@ -166,6 +166,18 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
                     ),
                   )),
                   DataCell(Center(child: Text('C' * (10 - index % 10)))),
+
+                      DataCell(Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                            VerticalDivider(color: Colors.black87,thickness: 1),
+                            SizedBox(width: 50,child: Text('B' * (10 - (index + 5) % 10))),
+                          ],
+                        ),
+                      )),
                   DataCell(Center(child: Text('D' * (10 - index % 10)))),
                 ]))),
       ),
