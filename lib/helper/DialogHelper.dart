@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:get/get.dart';
 
 import '../shared/constants/colors.dart';
 import '../shared/utils/SizeConfig.dart';
 
 abstract class DialogHelper{
-  static openDialogBox({title,message,barrierDismissal,color = ColorConstants.BLACK,image = null}){
+  /*static openDialogBox({title,message,barrierDismissal,color = ColorConstants.BLACK,image = null}){
     return  showDialog(
       useSafeArea: true,
       useRootNavigator: false,
@@ -42,7 +41,7 @@ abstract class DialogHelper{
         });
       },
     );
-  }
+  }*/
 
   static openNormalDialogBox(){
     return showDialog(

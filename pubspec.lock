@@ -120,6 +120,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
+  csslib:
+    dependency: transitive
+    description:
+      name: csslib
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -260,6 +267,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.2.1"
+  flutter_html:
+    dependency: "direct main"
+    description:
+      name: flutter_html
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0-alpha.5"
   flutter_icons:
     dependency: "direct main"
     description:
@@ -287,7 +301,7 @@ packages:
       name: flutter_math_fork
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.2"
+    version: "0.6.3+1"
   flutter_statusbarcolor_ns:
     dependency: "direct main"
     description:
@@ -302,13 +316,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  flutter_svg_provider:
-    dependency: "direct main"
-    description:
-      name: flutter_svg_provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -361,6 +368,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.3.3"
+  html:
+    dependency: transitive
+    description:
+      name: html
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.15.0"
   http:
     dependency: transitive
     description:
@@ -452,6 +466,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.0"
+  numerus:
+    dependency: transitive
+    description:
+      name: numerus
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   octo_image:
     dependency: transitive
     description:

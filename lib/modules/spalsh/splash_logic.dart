@@ -117,6 +117,28 @@ class SplashLogic extends GetxController {
   };
 
 
+  var htmlData = r"""
+    <h1>Table support:</h1>
+    <table>
+    <colgroup>
+    <col width="50%" />
+    <col span="2" width="25%" />
+    </colgroup>
+    <thead>
+    <tr><th>One</th><th>Two</th><th>Three</th></tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td rowspan='2'>Rowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan</td><td>Data</td><td>Data</td>
+    </tr>
+    <tr>
+    <td colspan="2"><img alt='Google' src='https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png' /></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr><td>fData</td><td>fData</td><td>fData</td></tr>
+    </tfoot>
+    </table>""";
 
 
   @override
