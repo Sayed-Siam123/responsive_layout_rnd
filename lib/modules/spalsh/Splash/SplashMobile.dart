@@ -1,13 +1,12 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:responsive_layout_rnd/helper/internet_checker_helper/internet_checker_helper_logic.dart';
 import 'package:responsive_layout_rnd/modules/spalsh/splash_logic.dart';
-import 'package:html/parser.dart' as htmlparser;
-import 'package:html/dom.dart' as dom;
+
 
 // Container(
 //   color: Colors.red,
@@ -41,29 +40,6 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
 
     var designModel = DesignModel.fromMap(controller.demoJson,"design");
     var dataModel = DataModel.fromMap(controller.demoJson,"data");
-
-    dom.Document document = htmlparser.parse("""
-    <h1>Table support:</h1>
-    <table>
-    <colgroup>
-    <col width="50%" />
-    <col span="2" width="25%" />
-    </colgroup>
-    <thead>
-    <tr><th>One</th><th>Two</th><th>Three</th></tr>
-    </thead>
-    <tbody>
-    <tr>
-    <td rowspan='2'>Rowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan</td><td>Data</td><td>Data</td>
-    </tr>
-    <tr>
-    <td colspan="2"><img alt='Google' src='https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png' /></td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr><td>fData</td><td>fData</td><td>fData</td></tr>
-    </tfoot>
-    </table>""");
 
     return SafeArea(
       child: Scaffold(
@@ -138,9 +114,10 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
                   ));
                 }).toList(),
             ))),*/
-        body: Html(
-          shrinkWrap: true,
-            data: """
+        body: SingleChildScrollView(
+          child: HtmlWidget(
+            // the first parameter (`html`) is required
+            """
     <h1>Table support:</h1>
     <table>
     <colgroup>
@@ -148,40 +125,75 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
     <col span="2" width="25%" />
     </colgroup>
     <thead>
-    <tr><th>One</th><th>Two</th><th>Three</th></tr>
+    <tr class='table-row'><th>One</th><th>Two</th><th>Three</th></tr>
     </thead>
     <tbody>
-    <tr>
+    <tr rel='123'>
     <td rowspan='2'>Rowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan</td><td>Data</td><td>Data</td>
     </tr>
-    <tr>
+    <tr rel='1244'>
     <td colspan="2"><img alt='Google' src='https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png' /></td>
     </tr>
     </tbody>
     <tfoot>
-    <tr><td>fData</td><td>fData</td><td>fData</td></tr>
+    <tr rel='1234343'><td>fData</td><td>fData</td><td>fData</td></tr>
     </tfoot>
     </table>""",
-            style: {
-              // tables will have the below background color
-              "table": Style(
-                backgroundColor: Color.fromARGB(0x50, 0xee, 0xee, 0xee),
-              ),
-              // some other granular customizations are also possible
-              "tr": Style(
-                border: Border(bottom: BorderSide(color: Colors.grey)),
-              ),
-              "th": Style(
-                padding: EdgeInsets.all(6),
-                backgroundColor: Colors.grey,
-              ),
-              "td": Style(
-                padding: EdgeInsets.all(6),
-                alignment: Alignment.topLeft,
-              ),
-              // text that renders h1 elements will be red
-              "h1": Style(color: Colors.red),
-            }
+
+            // all other parameters are optional, a few notable params:
+
+            // specify custom styling for an element
+            // see supported inline styling below
+            customStylesBuilder: (element) {
+              if (element.classes.contains('foo')) {
+                return {'color': 'red'};
+              }
+
+              else if (element.classes.contains('table-row')) {
+                return {'color': 'red'};
+              }
+
+              return null;
+            },
+
+            // render a custom widget
+            customWidgetBuilder: (element) {
+              if (element.attributes['foo'] == 'bar') {
+                //return FooBarWidget();
+              }
+
+              return null;
+            },
+
+            // turn on selectable if required (it's disabled by default)
+            isSelectable: true,
+
+            // these callbacks are called when a complicated element is loading
+            // or failed to render allowing the app to render progress indicator
+            // and fallback widget
+            onErrorBuilder: (context, element, error) => Text('$element error: $error'),
+            onLoadingBuilder: (context, element, loadingProgress) => CircularProgressIndicator(),
+
+            // this callback will be triggered when user taps a link
+            onTapUrl: (url) {
+              print('tapped $url');
+              return true;
+            },
+
+            // select the render mode for HTML body
+            // by default, a simple `Column` is rendered
+            // consider using `ListView` or `SliverList` for better performance
+            renderMode: RenderMode.column,
+
+            // set the default styling for text
+            textStyle: TextStyle(fontSize: 14),
+
+            // turn on `webView` if you need IFRAME support (it's disabled by default)
+            webView: true,
+            onSelectionChanged: (selection, cause) {
+              print(selection);
+            },
+          ),
         ),
       ),
     );
