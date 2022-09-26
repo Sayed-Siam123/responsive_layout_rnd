@@ -1,13 +1,13 @@
+import 'dart:convert';
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:responsive_layout_rnd/helper/internet_checker_helper/internet_checker_helper_logic.dart';
 import 'package:responsive_layout_rnd/modules/spalsh/splash_logic.dart';
-import 'package:html/parser.dart' as htmlparser;
-import 'package:html/dom.dart' as dom;
+import 'package:webview_flutter/webview_flutter.dart';
 
 // Container(
 //   color: Colors.red,
@@ -28,42 +28,20 @@ import 'package:html/dom.dart' as dom;
 // ),
 // const SizedBox(height: SizeConstant.CONTENTSPACING*3,),  marque example
 
-
-
 class SplashMobilePortrait extends GetView<SplashLogic> {
   final SizingInformation? sizingInformation;
-  const SplashMobilePortrait({Key? key,this.sizingInformation}) : super(key: key);
+
+  const SplashMobilePortrait({Key? key, this.sizingInformation})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Get.find<SplashLogic>();
     Get.find<InternetCheckerHelperLogic>();
 
-    var designModel = DesignModel.fromMap(controller.demoJson,"design");
-    var dataModel = DataModel.fromMap(controller.demoJson,"data");
-
-    dom.Document document = htmlparser.parse("""
-    <h1>Table support:</h1>
-    <table>
-    <colgroup>
-    <col width="50%" />
-    <col span="2" width="25%" />
-    </colgroup>
-    <thead>
-    <tr><th>One</th><th>Two</th><th>Three</th></tr>
-    </thead>
-    <tbody>
-    <tr>
-    <td rowspan='2'>Rowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan</td><td>Data</td><td>Data</td>
-    </tr>
-    <tr>
-    <td colspan="2"><img alt='Google' src='https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png' /></td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr><td>fData</td><td>fData</td><td>fData</td></tr>
-    </tfoot>
-    </table>""");
+    var designModel = DesignModel.fromMap(controller.demoJson, "design");
+    var dataModel = DataModel.fromMap(controller.demoJson, "data");
+    WebViewController _controller;
 
     return SafeArea(
       child: Scaffold(
@@ -138,50 +116,39 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
                   ));
                 }).toList(),
             ))),*/
-        body: Html(
-          shrinkWrap: true,
-            data: """
-    <h1>Table support:</h1>
-    <table>
-    <colgroup>
-    <col width="50%" />
-    <col span="2" width="25%" />
-    </colgroup>
-    <thead>
-    <tr><th>One</th><th>Two</th><th>Three</th></tr>
-    </thead>
-    <tbody>
-    <tr>
-    <td rowspan='2'>Rowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan</td><td>Data</td><td>Data</td>
-    </tr>
-    <tr>
-    <td colspan="2"><img alt='Google' src='https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png' /></td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr><td>fData</td><td>fData</td><td>fData</td></tr>
-    </tfoot>
-    </table>""",
-            style: {
-              // tables will have the below background color
-              "table": Style(
-                backgroundColor: Color.fromARGB(0x50, 0xee, 0xee, 0xee),
-              ),
-              // some other granular customizations are also possible
-              "tr": Style(
-                border: Border(bottom: BorderSide(color: Colors.grey)),
-              ),
-              "th": Style(
-                padding: EdgeInsets.all(6),
-                backgroundColor: Colors.grey,
-              ),
-              "td": Style(
-                padding: EdgeInsets.all(6),
-                alignment: Alignment.topLeft,
-              ),
-              // text that renders h1 elements will be red
-              "h1": Style(color: Colors.red),
-            }
+        body: WebView(
+          initialUrl: 'about:blank',
+          javascriptMode: JavascriptMode.unrestricted,
+          javascriptChannels: Set.from([
+            JavascriptChannel(
+              name: 'Print',
+              onMessageReceived: (JavascriptMessage message) {
+                print('REL NUMBER IS : ${message.message}');
+              },
+            ),
+          ]),
+          onWebViewCreated: (WebViewController webViewController) async {
+            _controller = webViewController;
+            // String fileContent = await rootBundle.loadString('assets/index.html');
+            _controller.loadUrl(Uri.dataFromString(r'''
+              <!DOCTYPE html>  
+              <html>  
+              <head>  
+              <script type='text/javascript'>  
+              function fun() {  
+                  Print.postMessage("1122323");
+              }  
+              </script>  
+              </head>  
+              <body>  
+              <h3> This is an example of using onclick attribute in HTML. </h3>  
+              <p> Click the following button to see the effect. </p>  
+              <button onclick = "fun()">Click me</button>  
+              </body>  
+            </html>
+            ''', mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString());
+          },
+          zoomEnabled: false,
         ),
       ),
     );
@@ -190,15 +157,17 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
 
 class SplashMobileLandscape extends GetView<SplashLogic> {
   final SizingInformation? sizingInformation;
-  const SplashMobileLandscape({Key? key,this.sizingInformation}) : super(key: key);
+
+  const SplashMobileLandscape({Key? key, this.sizingInformation})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Get.find<SplashLogic>();
     Get.find<InternetCheckerHelperLogic>();
 
-    var designModel = DesignModel.fromMap(controller.demoJson,"design");
-    var dataModel = DataModel.fromMap(controller.demoJson,"data");
+    var designModel = DesignModel.fromMap(controller.demoJson, "design");
+    var dataModel = DataModel.fromMap(controller.demoJson, "data");
 
     return SafeArea(
       child: Scaffold(
@@ -231,53 +200,75 @@ class SplashMobileLandscape extends GetView<SplashLogic> {
               }
               return Colors.white;
             }),
-            columns: designModel.design!.map((e) => DataColumn2(
-              fixedWidth: e.isMultiple == false ? 200 : 350,
-              label: e.isMultiple == false ? Center(child: Text(e.label.toString())) : Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 8,),
-                    Text(e.label.toString()),
-                    const Divider(color: Colors.black87,thickness: 1,height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: IntrinsicHeight(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            for(int i = 0; i < e.column!.length; i++) ...[
-                              Center(child: Text(e.column![i])),
-                              //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
-                            ],
-                          ],
-                        ),
-                      ),
-                    ),]),
-            )).toList(),
-
+            columns: designModel.design!
+                .map((e) => DataColumn2(
+                      fixedWidth: e.isMultiple == false ? 200 : 350,
+                      label: e.isMultiple == false
+                          ? Center(child: Text(e.label.toString()))
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(e.label.toString()),
+                                  const Divider(
+                                      color: Colors.black87,
+                                      thickness: 1,
+                                      height: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
+                                    child: IntrinsicHeight(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          for (int i = 0;
+                                              i < e.column!.length;
+                                              i++) ...[
+                                            Center(child: Text(e.column![i])),
+                                            //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
+                                          ],
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                    ))
+                .toList(),
             rows: List<DataRow>.generate(
-                dataModel.data!.length, (index) => DataRow(
-              cells: dataModel.data![index].map((e) {
-                return !e.isMultiple! ? DataCell(Center(child: Text(e.label.toString())))
-                    : DataCell(Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      for(int i = 0; i < e.column!.length; i++) ...[
-                        SizedBox(width: 50,child: Center(child: Text(e.column![i])),),
-                        //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
-                      ],
-                    ],
-                  ),
-                ));
-              }).toList(),
-            ))),
+                dataModel.data!.length,
+                (index) => DataRow(
+                      cells: dataModel.data![index].map((e) {
+                        return !e.isMultiple!
+                            ? DataCell(Center(child: Text(e.label.toString())))
+                            : DataCell(Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    for (int i = 0;
+                                        i < e.column!.length;
+                                        i++) ...[
+                                      SizedBox(
+                                        width: 50,
+                                        child:
+                                            Center(child: Text(e.column![i])),
+                                      ),
+                                      //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
+                                    ],
+                                  ],
+                                ),
+                              ));
+                      }).toList(),
+                    ))),
       ),
     );
   }
 }
-
 
 /*[
                   dataModel.design![index].isMultiple! == false ? DataCell(Center(child: Text(dataModel.design![index].label.toString()))) : DataCell(Padding(
@@ -329,5 +320,3 @@ class SplashMobileLandscape extends GetView<SplashLogic> {
                       )),
                   DataCell(Center(child: Text('D' * (10 - index % 10)))),
                 ]*/
-
-
