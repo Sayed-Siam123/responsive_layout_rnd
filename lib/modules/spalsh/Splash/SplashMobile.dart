@@ -1,12 +1,13 @@
+import 'dart:convert';
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:responsive_layout_rnd/helper/internet_checker_helper/internet_checker_helper_logic.dart';
 import 'package:responsive_layout_rnd/modules/spalsh/splash_logic.dart';
-
+import 'package:webview_flutter/webview_flutter.dart';
 
 // Container(
 //   color: Colors.red,
@@ -27,19 +28,20 @@ import 'package:responsive_layout_rnd/modules/spalsh/splash_logic.dart';
 // ),
 // const SizedBox(height: SizeConstant.CONTENTSPACING*3,),  marque example
 
-
-
 class SplashMobilePortrait extends GetView<SplashLogic> {
   final SizingInformation? sizingInformation;
-  const SplashMobilePortrait({Key? key,this.sizingInformation}) : super(key: key);
+
+  const SplashMobilePortrait({Key? key, this.sizingInformation})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Get.find<SplashLogic>();
     Get.find<InternetCheckerHelperLogic>();
 
-    var designModel = DesignModel.fromMap(controller.demoJson,"design");
-    var dataModel = DataModel.fromMap(controller.demoJson,"data");
+    var designModel = DesignModel.fromMap(controller.demoJson, "design");
+    var dataModel = DataModel.fromMap(controller.demoJson, "data");
+    WebViewController _controller;
 
     return SafeArea(
       child: Scaffold(
@@ -114,86 +116,39 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
                   ));
                 }).toList(),
             ))),*/
-        body: SingleChildScrollView(
-          child: HtmlWidget(
-            // the first parameter (`html`) is required
-            """
-    <h1>Table support:</h1>
-    <table>
-    <colgroup>
-    <col width="50%" />
-    <col span="2" width="25%" />
-    </colgroup>
-    <thead>
-    <tr class='table-row'><th>One</th><th>Two</th><th>Three</th></tr>
-    </thead>
-    <tbody>
-    <tr rel='123'>
-    <td rowspan='2'>Rowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan\nRowspan</td><td>Data</td><td>Data</td>
-    </tr>
-    <tr rel='1244'>
-    <td colspan="2"><img alt='Google' src='https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png' /></td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr rel='1234343'><td>fData</td><td>fData</td><td>fData</td></tr>
-    </tfoot>
-    </table>""",
-
-            // all other parameters are optional, a few notable params:
-
-            // specify custom styling for an element
-            // see supported inline styling below
-            customStylesBuilder: (element) {
-              if (element.classes.contains('foo')) {
-                return {'color': 'red'};
-              }
-
-              else if (element.classes.contains('table-row')) {
-                return {'color': 'red'};
-              }
-
-              return null;
-            },
-
-            // render a custom widget
-            customWidgetBuilder: (element) {
-              if (element.attributes['foo'] == 'bar') {
-                //return FooBarWidget();
-              }
-
-              return null;
-            },
-
-            // turn on selectable if required (it's disabled by default)
-            isSelectable: true,
-
-            // these callbacks are called when a complicated element is loading
-            // or failed to render allowing the app to render progress indicator
-            // and fallback widget
-            onErrorBuilder: (context, element, error) => Text('$element error: $error'),
-            onLoadingBuilder: (context, element, loadingProgress) => CircularProgressIndicator(),
-
-            // this callback will be triggered when user taps a link
-            onTapUrl: (url) {
-              print('tapped $url');
-              return true;
-            },
-
-            // select the render mode for HTML body
-            // by default, a simple `Column` is rendered
-            // consider using `ListView` or `SliverList` for better performance
-            renderMode: RenderMode.column,
-
-            // set the default styling for text
-            textStyle: TextStyle(fontSize: 14),
-
-            // turn on `webView` if you need IFRAME support (it's disabled by default)
-            webView: true,
-            onSelectionChanged: (selection, cause) {
-              print(selection);
-            },
-          ),
+        body: WebView(
+          initialUrl: 'about:blank',
+          javascriptMode: JavascriptMode.unrestricted,
+          javascriptChannels: Set.from([
+            JavascriptChannel(
+              name: 'Print',
+              onMessageReceived: (JavascriptMessage message) {
+                print('REL NUMBER IS : ${message.message}');
+              },
+            ),
+          ]),
+          onWebViewCreated: (WebViewController webViewController) async {
+            _controller = webViewController;
+            // String fileContent = await rootBundle.loadString('assets/index.html');
+            _controller.loadUrl(Uri.dataFromString(r'''
+              <!DOCTYPE html>  
+              <html>  
+              <head>  
+              <script type='text/javascript'>  
+              function fun() {  
+                  Print.postMessage("1122323");
+              }  
+              </script>  
+              </head>  
+              <body>  
+              <h3> This is an example of using onclick attribute in HTML. </h3>  
+              <p> Click the following button to see the effect. </p>  
+              <button onclick = "fun()">Click me</button>  
+              </body>  
+            </html>
+            ''', mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString());
+          },
+          zoomEnabled: false,
         ),
       ),
     );
@@ -202,15 +157,17 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
 
 class SplashMobileLandscape extends GetView<SplashLogic> {
   final SizingInformation? sizingInformation;
-  const SplashMobileLandscape({Key? key,this.sizingInformation}) : super(key: key);
+
+  const SplashMobileLandscape({Key? key, this.sizingInformation})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Get.find<SplashLogic>();
     Get.find<InternetCheckerHelperLogic>();
 
-    var designModel = DesignModel.fromMap(controller.demoJson,"design");
-    var dataModel = DataModel.fromMap(controller.demoJson,"data");
+    var designModel = DesignModel.fromMap(controller.demoJson, "design");
+    var dataModel = DataModel.fromMap(controller.demoJson, "data");
 
     return SafeArea(
       child: Scaffold(
@@ -243,53 +200,75 @@ class SplashMobileLandscape extends GetView<SplashLogic> {
               }
               return Colors.white;
             }),
-            columns: designModel.design!.map((e) => DataColumn2(
-              fixedWidth: e.isMultiple == false ? 200 : 350,
-              label: e.isMultiple == false ? Center(child: Text(e.label.toString())) : Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 8,),
-                    Text(e.label.toString()),
-                    const Divider(color: Colors.black87,thickness: 1,height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: IntrinsicHeight(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            for(int i = 0; i < e.column!.length; i++) ...[
-                              Center(child: Text(e.column![i])),
-                              //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
-                            ],
-                          ],
-                        ),
-                      ),
-                    ),]),
-            )).toList(),
-
+            columns: designModel.design!
+                .map((e) => DataColumn2(
+                      fixedWidth: e.isMultiple == false ? 200 : 350,
+                      label: e.isMultiple == false
+                          ? Center(child: Text(e.label.toString()))
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(e.label.toString()),
+                                  const Divider(
+                                      color: Colors.black87,
+                                      thickness: 1,
+                                      height: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
+                                    child: IntrinsicHeight(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          for (int i = 0;
+                                              i < e.column!.length;
+                                              i++) ...[
+                                            Center(child: Text(e.column![i])),
+                                            //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
+                                          ],
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                    ))
+                .toList(),
             rows: List<DataRow>.generate(
-                dataModel.data!.length, (index) => DataRow(
-              cells: dataModel.data![index].map((e) {
-                return !e.isMultiple! ? DataCell(Center(child: Text(e.label.toString())))
-                    : DataCell(Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      for(int i = 0; i < e.column!.length; i++) ...[
-                        SizedBox(width: 50,child: Center(child: Text(e.column![i])),),
-                        //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
-                      ],
-                    ],
-                  ),
-                ));
-              }).toList(),
-            ))),
+                dataModel.data!.length,
+                (index) => DataRow(
+                      cells: dataModel.data![index].map((e) {
+                        return !e.isMultiple!
+                            ? DataCell(Center(child: Text(e.label.toString())))
+                            : DataCell(Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    for (int i = 0;
+                                        i < e.column!.length;
+                                        i++) ...[
+                                      SizedBox(
+                                        width: 50,
+                                        child:
+                                            Center(child: Text(e.column![i])),
+                                      ),
+                                      //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
+                                    ],
+                                  ],
+                                ),
+                              ));
+                      }).toList(),
+                    ))),
       ),
     );
   }
 }
-
 
 /*[
                   dataModel.design![index].isMultiple! == false ? DataCell(Center(child: Text(dataModel.design![index].label.toString()))) : DataCell(Padding(
@@ -341,5 +320,3 @@ class SplashMobileLandscape extends GetView<SplashLogic> {
                       )),
                   DataCell(Center(child: Text('D' * (10 - index % 10)))),
                 ]*/
-
-
