@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
 import 'dart:convert';
 
+import 'package:webview_flutter/webview_flutter.dart';
+
 class SplashLogic extends GetxController {
   var designModel;
+  var showLoading = false.obs;
 
   var demoJson = {
     "design": [
@@ -116,6 +119,23 @@ class SplashLogic extends GetxController {
     ]
   };
 
+  late WebViewController webController;
+
+  var script = """<script type='text/javascript'>
+        function fun() {
+      Print.postMessage("1122323");
+    }
+    </script>""".obs;
+
+  var emptyScript = "".obs;
+
+  var body = """<body>
+    <h3> This is an example of using onclick attribute in HTML. </h3>
+    <p> Click the following button to see the effect. </p>
+    <button onclick = "fun()">Click me</button>
+    </body>""".obs;
+
+  var emptyBody = "".obs;
 
   var htmlData = r"""
     <h1>Table support:</h1>
@@ -149,16 +169,30 @@ class SplashLogic extends GetxController {
   }
 
   @override
-  void onReady() {
+  onReady() async{
     // TODO: implement onReady
     super.onReady();
     print("on ready");
+    await getHTMLData();
   }
 
   @override
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+  }
+
+  getHTMLData() async{
+    showLoading.value = true;
+    emptyScript.value = script.value;
+    emptyBody.value = body.value;
+    await Future.delayed(Duration(seconds: 5));
+    showLoading.value = false;
+    await reload();
+  }
+
+  reload() async{
+    await webController.reload();
   }
 }
 

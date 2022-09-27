@@ -41,7 +41,15 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
 
     var designModel = DesignModel.fromMap(controller.demoJson, "design");
     var dataModel = DataModel.fromMap(controller.demoJson, "data");
-    WebViewController _controller;
+
+    var index = """<!DOCTYPE html>  
+    <html>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    ${controller.emptyScript.value == "" ? "" : controller.emptyScript.value}
+    </head>
+    ${controller.emptyBody.value == "" ? "" : controller.body.value}
+    </html>""";
 
     return SafeArea(
       child: Scaffold(
@@ -116,44 +124,51 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
                   ));
                 }).toList(),
             ))),*/
-        body: WebView(
-          initialUrl: 'about:blank',
-          javascriptMode: JavascriptMode.unrestricted,
-          javascriptChannels: Set.from([
-            JavascriptChannel(
-              name: 'Print',
-              onMessageReceived: (JavascriptMessage message) {
-                print('REL NUMBER IS : ${message.message}');
-              },
-            ),
-          ]),
-          onWebViewCreated: (WebViewController webViewController) async {
-            _controller = webViewController;
-            // String fileContent = await rootBundle.loadString('assets/index.html');
-            _controller.loadUrl(Uri.dataFromString(r'''
-              <!DOCTYPE html>  
-              <html>  
-              <head>  
-              <script type='text/javascript'>  
-              function fun() {  
-                  Print.postMessage("1122323");
-              }  
-              </script>  
-              </head>  
-              <body>  
-              <h3> This is an example of using onclick attribute in HTML. </h3>  
-              <p> Click the following button to see the effect. </p>  
-              <button onclick = "fun()">Click me</button>  
-              </body>  
-            </html>
-            ''', mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString());
-          },
-          zoomEnabled: false,
-        ),
+        body: Obx(() {
+          return !controller.showLoading.value ? WebView(
+            initialUrl: 'about:blank',
+            javascriptMode: JavascriptMode.unrestricted,
+            javascriptChannels: Set.from([
+              JavascriptChannel(
+                name: 'Print',
+                onMessageReceived: (JavascriptMessage message) {
+                  print('REL NUMBER IS : ${message.message}');
+                },
+              ),
+            ]),
+            onWebViewCreated: (WebViewController webViewController) async {
+              controller.webController = webViewController;
+              // String fileContent = await rootBundle.loadString('assets/index.html');
+              controller.webController.loadUrl(Uri.dataFromString(
+                  '\r$index', mimeType: 'text/html',
+                  encoding: Encoding.getByName('utf-8')).toString());
+            },
+            zoomEnabled: false,
+          ) : CircularProgressIndicator();
+        }),
       ),
     );
   }
 }
+
+/*r'''
+              <!DOCTYPE html>
+              <html>
+              <head>
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <script type='text/javascript'>
+              function fun() {
+                  Print.postMessage("1122323");
+              }
+              </script>
+              </head>
+              <body>
+              <h3> This is an example of using onclick attribute in HTML. </h3>
+              <p> Click the following button to see the effect. </p>
+              <button onclick = "fun()">Click me</button>
+              </body>
+            </html>
+            '''*/
 
 class SplashMobileLandscape extends GetView<SplashLogic> {
   final SizingInformation? sizingInformation;
@@ -201,68 +216,70 @@ class SplashMobileLandscape extends GetView<SplashLogic> {
               return Colors.white;
             }),
             columns: designModel.design!
-                .map((e) => DataColumn2(
-                      fixedWidth: e.isMultiple == false ? 200 : 350,
-                      label: e.isMultiple == false
-                          ? Center(child: Text(e.label.toString()))
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                .map((e) =>
+                DataColumn2(
+                  fixedWidth: e.isMultiple == false ? 200 : 350,
+                  label: e.isMultiple == false
+                      ? Center(child: Text(e.label.toString()))
+                      : Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(e.label.toString()),
+                        const Divider(
+                            color: Colors.black87,
+                            thickness: 1,
+                            height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5.0),
+                          child: IntrinsicHeight(
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceAround,
                               children: [
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(e.label.toString()),
-                                  const Divider(
-                                      color: Colors.black87,
-                                      thickness: 1,
-                                      height: 10),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.0),
-                                    child: IntrinsicHeight(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          for (int i = 0;
-                                              i < e.column!.length;
-                                              i++) ...[
-                                            Center(child: Text(e.column![i])),
-                                            //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
-                                          ],
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ]),
-                    ))
+                                for (int i = 0;
+                                i < e.column!.length;
+                                i++) ...[
+                                  Center(child: Text(e.column![i])),
+                                  //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
+                                ],
+                              ],
+                            ),
+                          ),
+                        ),
+                      ]),
+                ))
                 .toList(),
             rows: List<DataRow>.generate(
                 dataModel.data!.length,
-                (index) => DataRow(
+                    (index) =>
+                    DataRow(
                       cells: dataModel.data![index].map((e) {
                         return !e.isMultiple!
                             ? DataCell(Center(child: Text(e.label.toString())))
                             : DataCell(Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    for (int i = 0;
-                                        i < e.column!.length;
-                                        i++) ...[
-                                      SizedBox(
-                                        width: 50,
-                                        child:
-                                            Center(child: Text(e.column![i])),
-                                      ),
-                                      //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
-                                    ],
-                                  ],
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceAround,
+                            children: [
+                              for (int i = 0;
+                              i < e.column!.length;
+                              i++) ...[
+                                SizedBox(
+                                  width: 50,
+                                  child:
+                                  Center(child: Text(e.column![i])),
                                 ),
-                              ));
+                                //e.column!.indexOf(e.column![i]) != (e.column!.length-1) ? VerticalDivider(color: Colors.black87,thickness: 1, width: 0) : Visibility(visible: false,child: VerticalDivider(color: Colors.black87,thickness: 1, width: 0)),
+                              ],
+                            ],
+                          ),
+                        ));
                       }).toList(),
                     ))),
       ),
