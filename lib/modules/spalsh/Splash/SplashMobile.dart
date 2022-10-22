@@ -42,18 +42,18 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
     var designModel = DesignModel.fromMap(controller.demoJson, "design");
     var dataModel = DataModel.fromMap(controller.demoJson, "data");
 
-    var index = """<!DOCTYPE html>  
+    /*var index = """<!DOCTYPE html>
     <html>
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     ${controller.emptyScript.value == "" ? "" : controller.emptyScript.value}
     </head>
     ${controller.emptyBody.value == "" ? "" : controller.body.value}
-    </html>""";
+    </html>""";*/
 
     return SafeArea(
       child: Scaffold(
-        /*body: DataTable2(
+        body: DataTable2(
             columnSpacing: 2,
             horizontalMargin: 2,
             minWidth: 1500,
@@ -123,8 +123,8 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
                     ),
                   ));
                 }).toList(),
-            ))),*/
-        body: Obx(() {
+            ))),
+        /*body: Obx(() {
           return !controller.showLoading.value ? WebView(
             initialUrl: 'about:blank',
             javascriptMode: JavascriptMode.unrestricted,
@@ -145,7 +145,7 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
             },
             zoomEnabled: false,
           ) : CircularProgressIndicator();
-        }),
+        }),*/
       ),
     );
   }

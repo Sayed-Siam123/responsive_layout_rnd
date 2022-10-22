@@ -119,7 +119,7 @@ class SplashLogic extends GetxController {
     ]
   };
 
-  late WebViewController webController;
+  /*late WebViewController webController;
 
   var script = """<script type='text/javascript'>
         function fun() {
@@ -159,7 +159,7 @@ class SplashLogic extends GetxController {
     <tr><td>fData</td><td>fData</td><td>fData</td></tr>
     </tfoot>
     </table>""";
-
+*/
 
   @override
   void onInit() {
@@ -173,7 +173,7 @@ class SplashLogic extends GetxController {
     // TODO: implement onReady
     super.onReady();
     print("on ready");
-    await getHTMLData();
+    //await getHTMLData();
   }
 
   @override
@@ -182,18 +182,18 @@ class SplashLogic extends GetxController {
     super.onClose();
   }
 
-  getHTMLData() async{
-    showLoading.value = true;
-    emptyScript.value = script.value;
-    emptyBody.value = body.value;
-    await Future.delayed(Duration(seconds: 5));
-    showLoading.value = false;
-    await reload();
-  }
-
-  reload() async{
-    await webController.reload();
-  }
+  // getHTMLData() async{
+  //   showLoading.value = true;
+  //   emptyScript.value = script.value;
+  //   emptyBody.value = body.value;
+  //   await Future.delayed(Duration(seconds: 5));
+  //   showLoading.value = false;
+  //   await reload();
+  // }
+  //
+  // reload() async{
+  //   await webController.reload();
+  // }
 }
 
 
