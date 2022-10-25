@@ -226,12 +226,13 @@ class SplashLogic extends GetxController {
           continue;
 
         case "dropdown":
+          List dataValue = widgetJson[i]["value"] as List;
           widgetList.add(Expanded(
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: 3,
+              itemCount: dataValue.length,
               itemBuilder: (context, index) {
-                return Text("sasas");
+                return Text(dataValue[index]);
               },
             ),
           ));
