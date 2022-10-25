@@ -34,7 +34,24 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
   const SplashMobilePortrait({Key? key, this.sizingInformation})
       : super(key: key);
 
+
   @override
+  Widget build(BuildContext context) {
+    Get.find<SplashLogic>();
+    Get.find<InternetCheckerHelperLogic>();
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Column(
+          children: controller.widgetList,
+        ),
+      ),
+    );
+
+  }
+
+  /*@override
   Widget build(BuildContext context) {
     Get.find<SplashLogic>();
     Get.find<InternetCheckerHelperLogic>();
@@ -42,14 +59,14 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
     var designModel = DesignModel.fromMap(controller.demoJson, "design");
     var dataModel = DataModel.fromMap(controller.demoJson, "data");
 
-    /*var index = """<!DOCTYPE html>
+    *//*var index = """<!DOCTYPE html>
     <html>
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     ${controller.emptyScript.value == "" ? "" : controller.emptyScript.value}
     </head>
     ${controller.emptyBody.value == "" ? "" : controller.body.value}
-    </html>""";*/
+    </html>""";*//*
 
     return SafeArea(
       child: Scaffold(
@@ -124,7 +141,7 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
                   ));
                 }).toList(),
             ))),
-        /*body: Obx(() {
+        *//*body: Obx(() {
           return !controller.showLoading.value ? WebView(
             initialUrl: 'about:blank',
             javascriptMode: JavascriptMode.unrestricted,
@@ -145,10 +162,10 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
             },
             zoomEnabled: false,
           ) : CircularProgressIndicator();
-        }),*/
+        }),*//*
       ),
     );
-  }
+  }*/
 }
 
 /*r'''

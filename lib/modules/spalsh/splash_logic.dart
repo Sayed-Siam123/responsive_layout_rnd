@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 
@@ -119,6 +120,32 @@ class SplashLogic extends GetxController {
     ]
   };
 
+  List<Widget> widgetList = [];
+
+  var widgetJson = [
+    {
+      "type" : "textfield",
+      "label" : "Username",
+      "hint" : "Enter your username",
+      "dataType" : "text",
+      "value" : [],
+    },
+    {
+      "type" : "textfield", //checkbox,radio,datetime picker,dropdown
+      "label" : "Password",
+      "hint" : "Enter your password",
+      "dataType" : "password",
+      "value" : [], //dropdown,checkbox,radio
+    },
+    {
+      "type" : "dropdown", //checkbox,radio,datetime picker,dropdown
+      "label" : "Select one item",
+      "hint" : "",
+      "dataType" : "",
+      "value" : ["1","2","3"], //dropdown,checkbox,radio
+    }
+  ];
+
   /*late WebViewController webController;
 
   var script = """<script type='text/javascript'>
@@ -162,10 +189,12 @@ class SplashLogic extends GetxController {
 */
 
   @override
-  void onInit() {
+  onInit() async{
     // TODO: implement onReady
     super.onInit();
     print("on Init");
+    await onGenerateWidget();
+    print(widgetList);
   }
 
   @override
@@ -180,6 +209,35 @@ class SplashLogic extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+  }
+
+  onGenerateWidget() {
+    for(int i = 0; i<widgetJson.length; i++){
+      switch(widgetJson[i]["type"]){
+        case "textfield":
+          if(widgetJson[i]["dataType"] == "text"){
+            widgetList.add(TextField());
+          }
+          else if(widgetJson[i]["dataType"] == "password"){
+            widgetList.add(TextField(
+              obscureText: true,
+            ));
+          }
+          continue;
+
+        case "dropdown":
+          widgetList.add(Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: 3,
+              itemBuilder: (context, index) {
+                return Text("sasas");
+              },
+            ),
+          ));
+          continue;
+      }
+    }
   }
 
   // getHTMLData() async{
