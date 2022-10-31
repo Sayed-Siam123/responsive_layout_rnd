@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../shared/constants/ConstantSize.dart';
 import '../shared/constants/colors.dart';
+import '../shared/utils/SizeConfig.dart';
 
 
 
@@ -28,7 +31,8 @@ class ThemeConfig {
       brightness: brightness,
       buttonColor: buttonBackground,
       canvasColor: background,
-      cardColor: Colors.green,
+      shadowColor: primaryText,
+      cardColor: cardBackground,
       dividerColor: divider,
       // dividerTheme: DividerThemeData(
       //   color: divider,
@@ -45,25 +49,25 @@ class ThemeConfig {
       // textSelectionColor: accentColor,
       // textSelectionHandleColor: accentColor,
       // cursorColor: accentColor,
-      textSelectionTheme: TextSelectionThemeData(
-        selectionColor: accentColor,
-        selectionHandleColor: accentColor,
-        cursorColor: accentColor,
+      textSelectionTheme: const TextSelectionThemeData( //if its not transparent then it will show color when user will try to write
+        selectionColor: Colors.transparent,
+        selectionHandleColor: Colors.transparent,
+        cursorColor: Colors.transparent,
       ),
       toggleableActiveColor: accentColor,
-      appBarTheme: AppBarTheme(
-        brightness: brightness,
-        color: cardBackground,
-        textTheme: TextTheme(
-          bodyText1: baseTextTheme.bodyText1!.copyWith(
-            color: secondaryText,
-            fontSize: 18,
-          ),
-        ),
-        iconTheme: IconThemeData(
-          color: secondaryText,
-        ),
-      ),
+      // appBarTheme: AppBarTheme(
+      //   brightness: brightness,
+      //   color: cardBackground,
+      //   textTheme: TextTheme(
+      //     bodyText1: baseTextTheme.bodyText1!.copyWith(
+      //       color: secondaryText,
+      //       fontSize: 18,
+      //     ),
+      //   ),
+      //   iconTheme: IconThemeData(
+      //     color: secondaryText,
+      //   ),
+      // ),
       iconTheme: IconThemeData(
         color: secondaryText,
         size: 16.0,
@@ -109,101 +113,100 @@ class ThemeConfig {
       //fontFamily: 'Poppins',
       unselectedWidgetColor: hexToColor('#DADCDD'),
       textTheme: TextTheme(
-
         headline1: GoogleFonts.poppins(
-          textStyle: TextStyle(
+            textStyle: TextStyle(
               color: primaryText,
               fontSize: 34.0,
               fontWeight: FontWeight.bold,
-          )
+            )
         ),
 
         headline2: GoogleFonts.poppins(
             textStyle: TextStyle(
-                color: primaryText,
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
+              color: primaryText,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             )
         ),
 
         headline3: GoogleFonts.poppins(
             textStyle: TextStyle(
-                color: secondaryText,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
+              color: secondaryText,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
             )
         ),
 
 
         headline4: GoogleFonts.poppins(
             textStyle: TextStyle(
-                color: primaryText,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+              color: primaryText,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
             )
         ),
 
         headline5: GoogleFonts.poppins(
             textStyle: TextStyle(
-                color: primaryText,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
+              color: primaryText,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
             )
         ),
 
         headline6: GoogleFonts.poppins(
             textStyle: TextStyle(
-                color: primaryText,
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
+              color: primaryText,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
             )
         ),
 
         bodyText1: GoogleFonts.poppins(
             textStyle: TextStyle(
-                color: secondaryText,
-                fontSize: 15,
+              color: secondaryText,
+              fontSize: const AdaptiveTextSize().getadaptiveTextSize(Get.context, SizeConstant.MEDIUMTEXT, Get.height),
             )
         ),
 
         bodyText2: GoogleFonts.poppins(
             textStyle: TextStyle(
-                color: primaryText,
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
+              color: primaryText,
+              fontSize: const AdaptiveTextSize().getadaptiveTextSize(Get.context, SizeConstant.MEDIUMTEXT, Get.height),
+              fontWeight: FontWeight.w400,
             )
         ),
 
         button: GoogleFonts.poppins(
             textStyle: TextStyle(
-                color: primaryText,
-                fontSize: 12.0,
-                fontWeight: FontWeight.w700,
+              color: primaryText,
+              fontSize: 12.0,
+              fontWeight: FontWeight.w700,
             )
         ),
 
         caption: GoogleFonts.poppins(
             textStyle: TextStyle(
-                color: primaryText,
-                fontSize: 11.0,
-                fontWeight: FontWeight.w300,
+              color: primaryText,
+              fontSize: 11.0,
+              fontWeight: FontWeight.w300,
             )
         ),
 
 
         overline: GoogleFonts.poppins(
             textStyle: TextStyle(
-                color: secondaryText,
-                fontSize: 11.0,
-                fontWeight: FontWeight.w500,
+              color: secondaryText,
+              fontSize: 11.0,
+              fontWeight: FontWeight.w500,
             )
         ),
 
         subtitle1: GoogleFonts.poppins(
             textStyle: TextStyle(
-                color: primaryText,
-                fontSize: 16.0,
-                fontWeight: FontWeight.w700,
+              color: primaryText,
+              fontSize: 16.0,
+              fontWeight: FontWeight.w700,
             )
         ),
 
@@ -215,35 +218,35 @@ class ThemeConfig {
             )
         ),
       ),
-      colorScheme: ColorScheme.fromSwatch().copyWith(secondary: accentColor),
+      //colorScheme: ColorScheme.fromSwatch().copyWith(secondary: accentColor),
     );
   }
 
   static ThemeData get lightTheme => createTheme(
-        brightness: Brightness.light,
-        background: ColorConstants.BACKGROUNDCOLOR,
-        cardBackground: ColorConstants.secondaryAppColor,
-        primaryText: ColorConstants.TEXTBLACK,
-        secondaryText: ColorConstants.GREY,
-        accentColor: ColorConstants.GREEN,
-        divider: ColorConstants.secondaryAppColor,
-        buttonBackground: ColorConstants.GREEN,
-        buttonText: ColorConstants.WHITE,
-        disabled: ColorConstants.GREY,
-        error: ColorConstants.RED,
-      );
+    brightness: Brightness.light,
+    background: ColorConstants.WHITE,
+    cardBackground: ColorConstants.WHITE,
+    primaryText: ColorConstants.TEXTBLACK,
+    secondaryText: ColorConstants.GREY,
+    accentColor: ColorConstants.GREEN,
+    divider: ColorConstants.GREY,
+    buttonBackground: ColorConstants.TEXTBLACK,
+    buttonText: ColorConstants.WHITE,
+    disabled: ColorConstants.GREY,
+    error: ColorConstants.RED,
+  );
 
   static ThemeData get darkTheme => createTheme(
-        brightness: Brightness.dark,
-        background: ColorConstants.darkScaffoldBackgroundColor,
-        cardBackground: ColorConstants.secondaryDarkAppColor,
-        primaryText: Colors.white,
-        secondaryText: Colors.black,
-        accentColor: ColorConstants.secondaryDarkAppColor,
-        divider: Colors.black45,
-        buttonBackground: Colors.white,
-        buttonText: ColorConstants.secondaryDarkAppColor,
-        disabled: ColorConstants.secondaryDarkAppColor,
-        error: Colors.red,
-      );
+    brightness: Brightness.dark,
+    background: ColorConstants.BLACK,
+    cardBackground: ColorConstants.GREY,
+    primaryText: ColorConstants.WHITE,
+    secondaryText: ColorConstants.WHITE,
+    accentColor: ColorConstants.GREEN,
+    divider: ColorConstants.GREY,
+    buttonBackground: ColorConstants.WHITE,
+    buttonText: ColorConstants.TEXTBLACK,
+    disabled: ColorConstants.GREY,
+    error: ColorConstants.RED,
+  );
 }
