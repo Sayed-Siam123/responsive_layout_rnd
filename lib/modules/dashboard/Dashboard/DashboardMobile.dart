@@ -13,7 +13,16 @@ class DashboardMobilePortrait extends GetView<DashboardLogic> {
   Widget build(BuildContext context) {
     Get.find<DashboardLogic>();
     Get.find<InternetCheckerHelperLogic>();
-    return SafeArea(child: Scaffold());
+    return SafeArea(
+        child: Scaffold(
+          appBar: AppBar(),
+          body: Column(
+            children: [
+
+            ],
+          ),
+        )
+    );
   }
 }
 

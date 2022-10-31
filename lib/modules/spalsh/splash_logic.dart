@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:responsive_layout_rnd/routes/app_pages.dart';
 import 'dart:convert';
 
 import 'package:webview_flutter/webview_flutter.dart';
@@ -195,6 +196,7 @@ class SplashLogic extends GetxController {
     print("on Init");
     await onGenerateWidget();
     print(widgetList);
+    Get.offAllNamed(Routes.DASHBOARD);
   }
 
   @override
