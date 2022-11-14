@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:responsive_layout_rnd/routes/app_pages.dart';
 import 'dart:convert';
 
 import 'package:webview_flutter/webview_flutter.dart';
@@ -166,6 +167,7 @@ class SplashLogic extends GetxController {
     // TODO: implement onReady
     super.onInit();
     print("on Init");
+
   }
 
   @override
@@ -173,7 +175,8 @@ class SplashLogic extends GetxController {
     // TODO: implement onReady
     super.onReady();
     print("on ready");
-    await getHTMLData();
+    Get.offAllNamed(Routes.DASHBOARD);
+    //await getHTMLData();
   }
 
   @override
@@ -186,7 +189,7 @@ class SplashLogic extends GetxController {
     showLoading.value = true;
     emptyScript.value = script.value;
     emptyBody.value = body.value;
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 2));
     showLoading.value = false;
     await reload();
   }
