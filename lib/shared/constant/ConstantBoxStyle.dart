@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/ConstantSize.dart';
 
-abstract class ConstantStyle{
+abstract class BoxStyleConstant{
   static drawerBoxDecorationStyle({color}){
     return BoxDecoration(
       color: color,
@@ -26,6 +26,20 @@ abstract class ConstantStyle{
     return BoxDecoration(
       color: color,
       borderRadius: BorderRadius.circular(SizeConstant.BOXRADIUS),
+    );
+  }
+
+  static circleBoxDecorationStyle(){
+    return BoxDecoration(
+      //color: Colors.red,
+      shape: BoxShape.circle
+    );
+  }
+
+  static shimmerDecorationStyle({color}){
+    return BoxDecoration(
+        color: color,
+        shape: BoxShape.rectangle
     );
   }
 

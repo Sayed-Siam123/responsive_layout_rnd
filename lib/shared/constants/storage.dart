@@ -1,4 +1,5 @@
 class StorageConstants {
-  static final String token = 'token';
-  static final String userInfo = 'userInfo';
+  static const String userInfo = 'userInfo';
+  static const String token = "token";
+  static const String userSessionData = "user_session_data";
 }
