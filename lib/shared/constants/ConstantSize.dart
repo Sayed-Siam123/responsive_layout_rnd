@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../constant/ConstantFunctions.dart';
@@ -56,59 +56,59 @@ abstract class SizeConstant{
     var value = 0.0;
 
     if(!FunctionsConstant.isTablet(context: context,sizingInformation: sizingInformation)){
-      if(FunctionsConstant.orientation(context: Get.context!) == 0){
+      if(FunctionsConstant.orientation(context: context!) == 0){
         //for portrait mobile
         switch(type){
           case "title":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.LARGETEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.LARGETEXT, MediaQuery.of(context).size.height);
             break;
 
           case "title2":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "subtitle":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "body":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "hint":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.SMALLTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.SMALLTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "button":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.SMALLTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.SMALLTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "appbartitle":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.APPBARTITLESIZELARGE+4, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.APPBARTITLESIZELARGE+4, MediaQuery.of(context).size.height);
             break;
 
           case "gridListTileFont":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.SMALLTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.SMALLTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "manCatFont":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.SMALLTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.SMALLTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "extraSmallHint":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRASMALLTEXT+2, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRASMALLTEXT+2, MediaQuery.of(context).size.height);
             break;
 
           case "smallHint":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRASMALLTEXT+5, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRASMALLTEXT+5, MediaQuery.of(context).size.height);
             break;
 
           case "d_b_text":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT, MediaQuery.of(context).size.height);
             break;
 
           default:
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRASMALLTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRASMALLTEXT, MediaQuery.of(context).size.height);
             break;
         }
       }
@@ -116,110 +116,110 @@ abstract class SizeConstant{
         //for landscape mobile
         switch(type){
           case "title":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRALARGETEXT+10, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRALARGETEXT+10, MediaQuery.of(context).size.height);
             break;
 
           case "title2":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRALARGETEXT+15, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRALARGETEXT+15, MediaQuery.of(context).size.height);
             break;
 
           case "subtitle":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.LARGETEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.LARGETEXT, MediaQuery.of(context).size.height);
             break;
 
           case "body":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRAMEDIUMTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRAMEDIUMTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "button":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.LARGETEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.LARGETEXT, MediaQuery.of(context).size.height);
             break;
 
           case "appbartitle":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.APPBARTITLESIZEEXTRALARGE+4, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.APPBARTITLESIZEEXTRALARGE+4, MediaQuery.of(context).size.height);
             break;
 
           case "gridListTileFont":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRALARGETEXT+10, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRALARGETEXT+10, MediaQuery.of(context).size.height);
             break;
 
           case "manCatFont":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRALARGETEXT+20, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRALARGETEXT+20, MediaQuery.of(context).size.height);
             break;
 
           case "extraSmallHint":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRALARGETEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRALARGETEXT, MediaQuery.of(context).size.height);
             break;
 
           case "smallHint":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRALARGETEXT+10, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRALARGETEXT+10, MediaQuery.of(context).size.height);
             break;
 
           case "d_b_text":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRALARGETEXT+15, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRALARGETEXT+15, MediaQuery.of(context).size.height);
             break;
 
           default:
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.SMALLTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.SMALLTEXT, MediaQuery.of(context).size.height);
             break;
         }
       }
     }//mobile
 
     else{
-      if(FunctionsConstant.orientation(context: Get.context!) == 0){
+      if(FunctionsConstant.orientation(context: context!) == 0){
         //for portrait tablet
         switch(type){
           case "title":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.LARGETEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.LARGETEXT, MediaQuery.of(context).size.height);
             break;
 
           case "title2":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT+5, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT+5, MediaQuery.of(context).size.height);
             break;
 
           case "subtitle":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "body":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "hint":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.SMALLTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.SMALLTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "button":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.SMALLTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.SMALLTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "appbartitle":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.APPBARTITLESIZELARGE+2, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.APPBARTITLESIZELARGE+2, MediaQuery.of(context).size.height);
             break;
 
           case "gridListTileFont":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT+3, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT+3, MediaQuery.of(context).size.height);
             break;
 
           case "manCatFont":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRAMEDIUMTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRAMEDIUMTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "extraSmallHint":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT+2, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT+2, MediaQuery.of(context).size.height);
             break;
 
           case "smallHint":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT+6, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT+6, MediaQuery.of(context).size.height);
             break;
 
           case "d_b_text":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT+2, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT+2, MediaQuery.of(context).size.height);
             break;
 
           default:
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRASMALLTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRASMALLTEXT, MediaQuery.of(context).size.height);
             break;
         }
       }
@@ -227,51 +227,51 @@ abstract class SizeConstant{
         //for landscape tablet
         switch(type){
           case "title":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRALARGETEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRALARGETEXT, MediaQuery.of(context).size.height);
             break;
 
           case "title2":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "subtitle":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.LARGETEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.LARGETEXT, MediaQuery.of(context).size.height);
             break;
 
           case "body":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRAMEDIUMTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRAMEDIUMTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "button":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.LARGETEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.LARGETEXT, MediaQuery.of(context).size.height);
             break;
 
           case "appbartitle":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.APPBARTITLESIZEEXTRALARGE, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.APPBARTITLESIZEEXTRALARGE, MediaQuery.of(context).size.height);
             break;
 
           case "gridListTileFont":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.LARGETEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.LARGETEXT, MediaQuery.of(context).size.height);
             break;
 
           case "manCatFont":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.EXTRAMEDIUMTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.EXTRAMEDIUMTEXT, MediaQuery.of(context).size.height);
             break;
 
           case "extraSmallHint":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT+2, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT+2, MediaQuery.of(context).size.height);
             break;
 
           case "smallHint":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT+6, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT+6, MediaQuery.of(context).size.height);
             break;
 
           case "d_b_text":
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.MEDIUMTEXT+4, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.MEDIUMTEXT+4, MediaQuery.of(context).size.height);
             break;
 
           default:
-            value = const AdaptiveTextSize().getadaptiveTextSize(Get.context!, SizeConstant.SMALLTEXT, Get.height);
+            value = const AdaptiveTextSize().getadaptiveTextSize(context!, SizeConstant.SMALLTEXT, MediaQuery.of(context).size.height);
             break;
         }
       }
@@ -286,7 +286,7 @@ abstract class SizeConstant{
     var value = 0.0;
 
     if(!FunctionsConstant.isTablet(context: context,sizingInformation: sizingInformation)){
-      if(FunctionsConstant.orientation(context: Get.context!) == 0){
+      if(FunctionsConstant.orientation(context: context!) == 0){
         //for portrait mobile
         switch(type){
           case "extra_large_icon":
@@ -336,7 +336,7 @@ abstract class SizeConstant{
       }
     }//mobile
     else{
-      if(FunctionsConstant.orientation(context: Get.context!) == 0){
+      if(FunctionsConstant.orientation(context: context!) == 0){
         //for portrait tablet
         switch(type){
           case "extra_large_icon":

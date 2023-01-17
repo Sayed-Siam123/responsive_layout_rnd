@@ -1,12 +1,13 @@
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 class NavigatorHelper {
   static void popLastScreens({
+    BuildContext? context,
     required int popCount,
   }) {
     int count = 0;
     while (count < popCount) {
-      Get.back();
+      Navigator.pop(context!);
       count++;
     }
   }

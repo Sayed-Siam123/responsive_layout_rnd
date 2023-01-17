@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:get/get.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../shared/constants/ConstantSize.dart';
 import '../shared/constants/colors.dart';
 
 abstract class TextFieldConstant{
-  static textField({FormFieldState<dynamic>? field,hintText,isPassword,obscureTextShow=true,obscureTextShowFunc = null,TextEditingController? controller = null,SizingInformation? sizingInformation,fontSizeType}){
+  static textField({BuildContext? context,FormFieldState<dynamic>? field,hintText,isPassword,obscureTextShow=true,obscureTextShowFunc = null,TextEditingController? controller = null,SizingInformation? sizingInformation,fontSizeType}){
     return TextField(
       controller: controller,
       cursorColor: Colors.black,
-      style: Theme.of(Get.context!).textTheme.bodyText2!.copyWith(
+      style: Theme.of(context!).textTheme.bodyText2!.copyWith(
         color: ColorConstants.TEXTBLACK,
         fontWeight: FontWeight.normal,
-        fontSize: SizeConstant.fontSizes(context: Get.context!,sizingInformation: sizingInformation,type: fontSizeType),
+        fontSize: SizeConstant.fontSizes(context: context,sizingInformation: sizingInformation,type: fontSizeType),
       ),
       onChanged: (String? value){
         if(value != ""){
@@ -31,7 +30,7 @@ abstract class TextFieldConstant{
         hintText: hintText,
         hintStyle: TextStyle(
           color: ColorConstants.TEXTBLACK,
-          fontSize: SizeConstant.fontSizes(context: Get.context!,sizingInformation: sizingInformation,type: fontSizeType),
+          fontSize: SizeConstant.fontSizes(context: context,sizingInformation: sizingInformation,type: fontSizeType),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: ColorConstants.BLACK.withOpacity(0.1)),

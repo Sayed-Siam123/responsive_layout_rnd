@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../shared/constants/ConstantSize.dart';
@@ -165,14 +164,14 @@ class ThemeConfig {
         bodyText1: GoogleFonts.poppins(
             textStyle: TextStyle(
               color: secondaryText,
-              fontSize: const AdaptiveTextSize().getadaptiveTextSize(Get.context, SizeConstant.MEDIUMTEXT, Get.height),
+              fontSize: 14,
             )
         ),
 
         bodyText2: GoogleFonts.poppins(
             textStyle: TextStyle(
               color: primaryText,
-              fontSize: const AdaptiveTextSize().getadaptiveTextSize(Get.context, SizeConstant.MEDIUMTEXT, Get.height),
+              fontSize: 14,
               fontWeight: FontWeight.w400,
             )
         ),

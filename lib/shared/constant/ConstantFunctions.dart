@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
-import 'package:get/get.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../constants/colors.dart';

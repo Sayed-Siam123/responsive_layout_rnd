@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationHelper{
@@ -7,7 +9,7 @@ class NotificationHelper{
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestCriticalPermission: true,
-      requestSoundPermission: true
+      requestSoundPermission: true,
     );
     var initializationsSettings = InitializationSettings(android: androidInitialize, iOS: iOSInitialize);
     await flutterLocalNotificationsPlugin!.initialize(initializationsSettings);
@@ -18,7 +20,6 @@ class NotificationHelper{
     const AndroidNotificationDetails(
       'noti_channel',
       'notification_channel',
-
       playSound: true,
       //sound: RawResourceAndroidNotificationSound('notification'),
       importance: Importance.max,
@@ -26,9 +27,13 @@ class NotificationHelper{
     );
 
     var not = NotificationDetails(android: androidPlatformChannelSpecifics,
-        iOS: const DarwinNotificationDetails()
+        iOS: const DarwinNotificationDetails(
+          presentSound: false,
+          presentBadge: false,
+          interruptionLevel: InterruptionLevel.active,
+        )
     );
 
-    await fln.show(0, title, body, not);
+    await fln.show(0, title, body, not,payload: jsonEncode({"id":"1","toPage": "/"}));
   }
 }
