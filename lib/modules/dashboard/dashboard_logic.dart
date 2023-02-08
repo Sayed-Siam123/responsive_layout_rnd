@@ -491,6 +491,8 @@ class DashboardLogic extends GetxController with GetTickerProviderStateMixin {
 
   List<Widget> tabList = [];
 
+  List<Widget> tabBarViewList = [];
+
   var buildingTab = false.obs;
 
   @override
@@ -514,7 +516,12 @@ class DashboardLogic extends GetxController with GetTickerProviderStateMixin {
     super.onClose();
   }
 
-  buildTable() {
+  buildTable() async{
+    await createTabs();
+    await buildTabBarWidget();
+  }
+
+  createTabs() {
     buildingTab.value = true;
     print(flightLogAltJson2);
     print(flightLogAltJson2.keys);
@@ -525,5 +532,11 @@ class DashboardLogic extends GetxController with GetTickerProviderStateMixin {
 
     flightLogAltTabController = TabController(length: tabList.length, vsync: this);
     buildingTab.value = false;
+  }
+
+  buildTabBarWidget() {
+    for(int i = 0; i<flightLogAltJson2.values.length; i++){
+      print(flightLogAltJson2.values.elementAt(i));
+    }
   }
 }
