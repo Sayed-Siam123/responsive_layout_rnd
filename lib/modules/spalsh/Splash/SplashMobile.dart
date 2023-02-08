@@ -44,7 +44,9 @@ class SplashMobilePortrait extends GetView<SplashLogic> {
       child: Scaffold(
         appBar: AppBar(),
         body: Column(
-          children: controller.widgetList,
+          children: [
+            Text("Text"),
+          ],
         ),
       ),
     );

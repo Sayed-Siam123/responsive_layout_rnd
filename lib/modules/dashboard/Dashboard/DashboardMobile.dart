@@ -5,6 +5,8 @@ import 'package:responsive_layout_rnd/helper/NotificationHelper.dart';
 import 'package:responsive_layout_rnd/modules/dashboard/dashboard_logic.dart';
 
 import '../../../helper/internet_checker_helper/internet_checker_helper_logic.dart';
+import '../../../shared/constants/ConstantSize.dart';
+import '../../../shared/constants/colors.dart';
 
 class DashboardMobilePortrait extends GetView<DashboardLogic> {
   final SizingInformation? sizingInformation;
@@ -23,6 +25,38 @@ class DashboardMobilePortrait extends GetView<DashboardLogic> {
               NotificationHelper.showBigTextNotification(title: "sasa", body: "sasa", fln: controller.flutterLocalNotificationsPlugin);
             },
           ),
+
+          ElevatedButton(
+            child: Text("Build Table Data"),
+            onPressed: () {
+              controller.buildTable();
+            },
+          ),
+
+          TabBar(
+            isScrollable: true,
+            indicator: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      SizeConstant.GRIDITEMRADIUS + 5)),
+              color: ColorConstants.PRIMARYBLUE,
+            ),
+            labelColor: ColorConstants.WHITE,
+            unselectedLabelColor: ColorConstants.GREY,
+            controller: controller.flightLogAltTabController,
+            tabs: controller.tabList,
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w800, fontSize: 16),
+            indicatorColor: ColorConstants.PRIMARYBLUE,
+          ),
+
+          // TabBarView(
+          //   controller: controller.flightLogAltTabController,
+          //   children: [
+          //
+          //   ],
+          // ),
+
         ],
       ),
     ));

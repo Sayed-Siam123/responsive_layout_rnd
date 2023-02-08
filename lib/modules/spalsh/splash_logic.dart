@@ -161,13 +161,11 @@ class SplashLogic extends GetxController {
     </tfoot>
     </table>""";
 
-
   @override
   void onInit() {
     // TODO: implement onReady
     super.onInit();
     print("on Init");
-
   }
 
   @override
